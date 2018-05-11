@@ -60,6 +60,10 @@ is_deeply({slice_missing(\%h, qw(a c d))}, {d => undef}, "slice_missing to nonex
 
 is_deeply({slice_missing(\%h)}, {}, "slice_missing with default list",);
 
+is_deeply({slice_notdef(\%h, qw(a b c))}, {c => undef}, "slice_notdef on undefined",);
+
+is_deeply({slice_notdef(\%h)}, {}, "slice_notdef with default list",);
+
 is_deeply(
     {slice_def \%h},
     {
@@ -182,6 +186,23 @@ is_deeply(
 );
 
 is_deeply({slice_missing_map(\%h)}, {}, "slice_missing_map using slice_missing",);
+
+is_deeply(
+    {
+        slice_notdef_map(
+            \%h,
+            (
+                a => "A",
+                b => "B",
+                c => "C"
+            )
+        )
+    },
+    {C => undef},
+    "slice_notdef_map with given map",
+);
+
+is_deeply({slice_notdef_map(\%h)}, {}, "slice_notdef_map using slice_notdef",);
 
 is_deeply(
     {slice_def_map \%h},
